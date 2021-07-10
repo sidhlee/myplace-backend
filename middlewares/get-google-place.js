@@ -21,10 +21,10 @@ const getGooglePlace = async (req, res, next) => {
   let place;
   try {
     const { data } = await axios(url);
+
     if (!data.candidates || data.candidates.length === 0) {
       return next(
-        new HttpError('Could not find a place for the given address'),
-        422
+        new HttpError('Could not find a place for the given address', 422)
       );
     }
     // https://developers.google.com/places/web-service/search#find-place-responses

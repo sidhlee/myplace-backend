@@ -38,9 +38,12 @@ const getPlacesByUserId = async (req, res, next) => {
   if (!user) {
     return next(new HttpError('Could not find a user with the given id.', 422));
   }
-  if (user.places.length === 0) {
-    return next(new HttpError('Could not find any places for the user.', 404));
-  }
+
+  // We want to send an empty array so that frontend can still show the user page
+  // instead of getting 404 error when user has 0 places.
+  // if (user.places.length === 0) {
+  //   return next(new HttpError('Could not find any places for the user.', 404));
+  // }
 
   return res.json({
     places: user.places.map((p) => p.toObject({ getters: true })),
